@@ -1,1 +1,1 @@
-# CPS765
+# CPS765 - Redes Complexas (*Complex Networks*)
