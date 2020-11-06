@@ -1,13 +1,42 @@
-\documentclass{homework}
-\usepackage{homework}
+\documentclass[l15]{homework}
 
-\title{Redes Complexas - CPS765 \\[1ex]%%
-	1ª Lista}
+\title{Redes Complexas - CPS765}
+\subtitle{1ª Lista}
 \author{Pedro Maciel Xavier}
 \register{116023847}
 
 \begin{document}
+	\maketitle
+	\quest{}
+	Podemos supor, neste caso, que as matrizes em questão vivem em um espaço vetorial construído sobre o semianel $(\mathcal{B}, \vee, \wedge)$ em vez de $(\R, +, \pdot)$, onde $\mathcal{B} = \{0, 1\}$. Assim, as entradas das matrizes serão sempre $0$ ou $1$ e as operações usuais de soma e multiplicação são substituídas pela disjunção e pela conjunção lógica, respectivamente.
 	
-	\quest
+	\subsubquest%%a
+	A fim de obter uma expressão para a alcançabilidade em $k$ passos do vértice $i$ ao $j$, dado pela entrada $\vet{B}_{i, j}^{(k)}$ vamos empregar um raciocínio indutivo. É claro que a alcançabilidade em $0$ passos é dada pela matriz identidade $\vet{I}$, uma vez que só é possível chegar ao vértice em que já encontramo-nos. O caso para um único passo é dado pela matriz de adjacências $\vet{A}$, trivialmente. Logo, $\vet{B}^{(0)} = \vet{I}$ e $\vet{B}^{(1)} = \vet{A}$. Vamos supor, por hipótese de indução, que a matriz $\vet{B}^{(k)} \in \mathcal{B}^{n \times n}$ representa a alcançabilidade em exatamente $k$ passos, isto é, se existe um caminho de comprimento $k$ ligando o vértice $i$ ao vértice $j$, então $\vet{B}^{(k)}_{i, j} = 1$. Caso contrário, $\vet{B}^{(k)}_{i, j} = 0$. Para saber se existe um caminho de tamanho $k + 1$ entre os vértices $i$ e $j$ é preciso que exista um caminho de tamanho $k$ entre $i$ e algum vértice $\xi$ assim como $\xi$ deve ser incidente em $j$. Portanto,%%
+	$$\vet{B}^{(k + 1)}_{i, j} = \bigvee_{\xi = 1}^{n} \vet{B}^{(k)}_{i, \xi} \wedge \vet{A}_{\xi, j}$$
+	de onde concluimos quem, para todo $k \ge 1$, $\vet{B}^{(k + 1)}= \vet{B}^{(k)} \vet{A}$. O resultado é dado pelo produto usual de matrizes induzido pelo semianel booleano. Logo, escrevemos $\vet{B}^{(k)} = \vet{A}^{k}$.
 	
+	\subsubquest%%b
+	Seguindo raciocínio semelhante, dizemos que $i$ alcança $j$ em $k$ ou menos passos se $B^{(\xi)}_{i,j} = 1$ para algum $0 \le \xi \le k$. Isto é,%%
+	$$\vet{C}_{i, j}^{(k)} = \vet{B}_{i, j}^{(0)} \vee \vet{B}_{i, j}^{(1)} \vee \vet{B}_{i, j}^{(2)} \dots \vee \vet{B}_{i, j}^{(k)} = \bigvee_{\xi = 0}^{n} \vet{B}_{i, j}^{(\xi)}$$
+	resultado que, por conta do espaço onde as matrizes se encontram, é caracterizado pela soma usual. Ou seja, $\vet{C}^{(k)} = \sum_{\xi=0}^{k} \vet{B}^{(\xi)}$.
+
+	\subsubquest%%c
+	Análise da complexidade:
+	\begin{itemize}
+		\item [$\vet{B}^{(k)}$ -] A multiplicação usual de matrizes tem custo $O(n^3)$. Como temos de calcular este produto $k - 1$ vezes, temos uma complexidade assintótica total de ordem $O(n^3 k)$.
+		
+		\item [$\vet{C}^{(k)}$ -] A soma de matrizes possui complexidade $O(n^2)$. Contando as $k - 1$ somas temos um total de $O(n^2 k)$ para esta etapa. Se recalculamos $\vet{B}^{(k)}$ a cada passo, a complexidade das multiplicações segue uma progressão aritmética em $k$, totalizando $O(n^3 k^2)$. Se aproveitamos a matriz anterior a cada soma, podemos realizar este processo em tempo  $O(n^3 k)$. O termo quadrático em $n$ é de ordem inferior e pode ser omitido em ambos os casos.
+	\end{itemize}
+	
+	\subsubquest%%d
+	Seguindo o conselho de multiplicar diferentemente, apresento duas abordagens para reduzir a complexidade do cálculo de $\vet{B}^{(k)}$ e $\vet{C}^{(k)}$. A primeira, se aplica a um grafo qualquer e se baseia na seguinte relação:
+	$$\vet{A}^k = \left\{\begin{array}{@{}cl@{}}
+		\vet{I} &\text{para } k = 0\\
+		\left(\vet{A}^{\frac{k}{2}}\right)^2 &\text{para } k \text{ par}\\
+		\left(\vet{A}^{\frac{k - 1}{2}}\right)^2 \ast \vet{A} &\text{para } k \text{ ímpar}
+		\end{array}\right.$$
+	para $k \ge 0$. Em geral, esta relação vale para qualquer operação $\ast$ associativa e, portanto, utilizaremos para o cálculo das potências de matrizes. Isso nos traz complexidade $O(\log k)$ nesta tarefa. Com este aprimoramento, somos capazes de calcular $\vet{B}^{(k)}$ em tempo $O(n^3 \log k)$ enquanto $\vet{C}^{(k)}$ sai por $O(n^3 k \log k)$.
+
+	\quest*{}
+	Oi
 \end{document}
