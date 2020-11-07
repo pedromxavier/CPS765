@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+    %% definitions
+    \def\tkh{3}
+    \def\tkw{3}
+
+    %% -----------
+    
+    \node[v] (A) at (-1.0*\tkw, +0.5*\tkh) {A};
+    \node[v] (B) at (+0.0*\tkw, +0.0*\tkh) {B};
+    \node[v] (C) at (-0.9*\tkw, -0.6*\tkh) {C};
+    \node[v] (D) at (+0.7*\tkw, +0.6*\tkh) {D};
+    \node[v] (E) at (+0.8*\tkw, -0.1*\tkh) {E};
+    \node[v] (F) at (+0.7*\tkw, -0.7*\tkh) {F};
+
+    %% links
+    \draw[e] (A) edge (B);
+    \draw[e] (A) edge (D);
+    \draw[e] (B) edge (C);
+    \draw[e] (B) edge (D);
+    \draw[e] (B) edge (F);
+    \draw[e] (C) edge (F);
+    \draw[e] (D) edge (E);
+    \draw[e] (E) edge (F);
+
+    \node[v] (A) at (-1.0*\tkw, +0.5*\tkh) {A};
+    \node[v] (B) at (+0.0*\tkw, +0.0*\tkh) {B};
+    \node[v] (C) at (-0.9*\tkw, -0.6*\tkh) {C};
+    \node[v] (D) at (+0.7*\tkw, +0.6*\tkh) {D};
+    \node[v] (E) at (+0.8*\tkw, -0.1*\tkh) {E};
+    \node[v] (F) at (+0.7*\tkw, -0.7*\tkh) {F};
+
+    \node[below = 0 of A] (a) {$1$};
+    \node[below = 0 of B] (b) {$\frac{1}{3}$};
+    \node[below = 0 of C] (c) {$1$};
+    \node[right = 0 of D] (d) {$\frac{1}{3}$};
+    \node[right = 0 of E] (e) {$0$};
+    \node[below = 0 of F] (f) {$\frac{1}{3}$};
+
+\end{tikzpicture}

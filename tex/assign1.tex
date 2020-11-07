@@ -1,23 +1,24 @@
-\documentclass[l15]{homework}
+\documentclass[l15, tikzdraw]{homework}
 
-\title{Redes Complexas - CPS765}
-\subtitle{1ª Lista}
+\title{Redes Complexas - CPS765 - 2020.2}
+\subtitle{Primeira Lista de Exercícios}
 \author{Pedro Maciel Xavier}
 \register{116023847}
 
 \begin{document}
-	\maketitle
-	\quest{}
+	\maketitle*%%
+
+	\quest*{Matriz de Adjacência}
 	Podemos supor, neste caso, que as matrizes em questão vivem em um espaço vetorial construído sobre o semianel $(\mathcal{B}, \vee, \wedge)$ em vez de $(\R, +, \pdot)$, onde $\mathcal{B} = \{0, 1\}$. Assim, as entradas das matrizes serão sempre $0$ ou $1$ e as operações usuais de soma e multiplicação são substituídas pela disjunção e pela conjunção lógica, respectivamente.
 	
 	\subsubquest%%a
 	A fim de obter uma expressão para a alcançabilidade em $k$ passos do vértice $i$ ao $j$, dado pela entrada $\vet{B}_{i, j}^{(k)}$ vamos empregar um raciocínio indutivo. É claro que a alcançabilidade em $0$ passos é dada pela matriz identidade $\vet{I}$, uma vez que só é possível chegar ao vértice em que já encontramo-nos. O caso para um único passo é dado pela matriz de adjacências $\vet{A}$, trivialmente. Logo, $\vet{B}^{(0)} = \vet{I}$ e $\vet{B}^{(1)} = \vet{A}$. Vamos supor, por hipótese de indução, que a matriz $\vet{B}^{(k)} \in \mathcal{B}^{n \times n}$ representa a alcançabilidade em exatamente $k$ passos, isto é, se existe um caminho de comprimento $k$ ligando o vértice $i$ ao vértice $j$, então $\vet{B}^{(k)}_{i, j} = 1$. Caso contrário, $\vet{B}^{(k)}_{i, j} = 0$. Para saber se existe um caminho de tamanho $k + 1$ entre os vértices $i$ e $j$ é preciso que exista um caminho de tamanho $k$ entre $i$ e algum vértice $\xi$ assim como $\xi$ deve ser incidente em $j$. Portanto,%%
-	$$\vet{B}^{(k + 1)}_{i, j} = \bigvee_{\xi = 1}^{n} \vet{B}^{(k)}_{i, \xi} \wedge \vet{A}_{\xi, j}$$
+		$$\vet{B}^{(k + 1)}_{i, j} = \bigvee_{\xi = 1}^{n} \vet{B}^{(k)}_{i, \xi} \wedge \vet{A}_{\xi, j}$$
 	de onde concluimos quem, para todo $k \ge 1$, $\vet{B}^{(k + 1)}= \vet{B}^{(k)} \vet{A}$. O resultado é dado pelo produto usual de matrizes induzido pelo semianel booleano. Logo, escrevemos $\vet{B}^{(k)} = \vet{A}^{k}$.
 	
 	\subsubquest%%b
 	Seguindo raciocínio semelhante, dizemos que $i$ alcança $j$ em $k$ ou menos passos se $B^{(\xi)}_{i,j} = 1$ para algum $0 \le \xi \le k$. Isto é,%%
-	$$\vet{C}_{i, j}^{(k)} = \vet{B}_{i, j}^{(0)} \vee \vet{B}_{i, j}^{(1)} \vee \vet{B}_{i, j}^{(2)} \dots \vee \vet{B}_{i, j}^{(k)} = \bigvee_{\xi = 0}^{n} \vet{B}_{i, j}^{(\xi)}$$
+		$$\vet{C}_{i, j}^{(k)} = \vet{B}_{i, j}^{(0)} \vee \vet{B}_{i, j}^{(1)} \vee \vet{B}_{i, j}^{(2)} \dots \vee \vet{B}_{i, j}^{(k)} = \bigvee_{\xi = 0}^{n} \vet{B}_{i, j}^{(\xi)}$$
 	resultado que, por conta do espaço onde as matrizes se encontram, é caracterizado pela soma usual. Ou seja, $\vet{C}^{(k)} = \sum_{\xi=0}^{k} \vet{B}^{(\xi)}$.
 
 	\subsubquest%%c
@@ -30,13 +31,107 @@
 	
 	\subsubquest%%d
 	Seguindo o conselho de multiplicar diferentemente, apresento duas abordagens para reduzir a complexidade do cálculo de $\vet{B}^{(k)}$ e $\vet{C}^{(k)}$. A primeira, se aplica a um grafo qualquer e se baseia na seguinte relação:
-	$$\vet{A}^k = \left\{\begin{array}{@{}cl@{}}
-		\vet{I} &\text{para } k = 0\\
-		\left(\vet{A}^{\frac{k}{2}}\right)^2 &\text{para } k \text{ par}\\
-		\left(\vet{A}^{\frac{k - 1}{2}}\right)^2 \ast \vet{A} &\text{para } k \text{ ímpar}
+		$$\vet{A}^k = \left\{\begin{array}{@{}cl@{}}
+			\vet{I} &\text{para } k = 0\\
+			\left(\vet{A}^{\frac{k}{2}}\right)^2 &\text{para } k \text{ par}\\
+			\left(\vet{A}^{\frac{k - 1}{2}}\right)^2 \ast \vet{A} &\text{para } k \text{ ímpar}
 		\end{array}\right.$$
-	para $k \ge 0$. Em geral, esta relação vale para qualquer operação $\ast$ associativa e, portanto, utilizaremos para o cálculo das potências de matrizes. Isso nos traz complexidade $O(\log k)$ nesta tarefa. Com este aprimoramento, somos capazes de calcular $\vet{B}^{(k)}$ em tempo $O(n^3 \log k)$ enquanto $\vet{C}^{(k)}$ sai por $O(n^3 k \log k)$.
+	para $k \ge 0$. Em geral, esta relação vale para qualquer operação $\ast$ associativa e, portanto, utilizaremos para o cálculo das potências de matrizes. Isso nos traz complexidade $O(\log k)$ nesta tarefa. Com este aprimoramento, somos capazes de calcular $\vet{B}^{(k)}$ em tempo $O(n^3 \log k)$ enquanto $\vet{C}^{(k)}$ sai por $O(n^3 \log k!) = O(n^3 k \log k)$. Apesar do ganho no cálculo de $\vet{B}_{(k)}$, simplesmente aplicar este método requer calcular cada $\xi$-ésima potência de $\vet{A}$. É melhor, portanto, multiplicar por $\vet{A}$ e somar ao resultado iterativamente, com custo $O(n^3 k + n^2 k) = O(n^3 k)$.\par
 
-	\quest*{}
-	Oi
+	Ainda podemos fazer melhor em alguns casos, dadas algumas condições. Vamos retornar ao espaço euclidiano usual $\R^{n \times n}$, pagando um custo $O(n^2)$ ao final do cálculo para definir cada entrada de $\vet{B}^{(k)}$ e $\vet{C}^{(k)}$ como 0 ou 1 verificando se cada elemento da matriz é ou não nulo, respectivamente. Se $\det (\vet{I} - \vet{A}) = (-1)^n \det (\vet{A} - \vet{I}) \neq 0$, isto é, para cada autovalor $\lambda$ de $\vet{A}$ temos que $\lambda \neq 1$, podemos dizer que
+		$$\sum_{\xi = 0}^{k} \vet{A}^\xi = (\vet{I} - \vet{A})^{-1} (\vet{I} - \vet{A}^{k + 1})$$
+	A inversão da matriz $\vet{I} - \vet{A}$ pode ser feita em tempo $O(n^3)$ pela eliminação de \textit{Gauss-Jordan}. Isso nos permite calcular $\vet{C}^{(k)}$ em tempo $O(n^3) + O(n^3 \log k)$, ou seja, $O(n^3 \log k)$.\par
+
+	Temos ainda um caso ainda mais específico, para grafos não-direcionados. Neste caso, a estrutura confere $\vet{A} = \vet{A}\T$. O Teorema Espectral nos garante, portanto, que a matriz $\vet{A}$ é diagonalizável e, além disso, a simetria permite encontrar a forma $\vet{A} = \vet{S} \vet{\Lambda} \vet{S}^{-1}$ em tempo $O(n^3)$ através da transformação de \textit{Householder} seguida da aplicação do algoritmo \textit{QR}. Em seguida, calculamos $\vet{B}^{(k)} \sim \vet{A}^k = \vet{S} \vet{\Lambda}^k \vet{S}^{-1}$ em tempo $O(n^3 + n \log k)$, uma vez que basta calcular a potência de cada uma das $n$ entradas da diagonal principal de $\vet{\Lambda}$, o que possui complexidade $O(\log k)$ segundo o método visto acima. Por fim, isso também se aplica ao cálculo de $\vet{C}^{(k)}$, que pelo método da soma geométrica de matrizes descrito acima pode ser feito em tempo $O(n^3 + n \log k)$. Isso se verifica também por outra propriedade da forma diagonal de $\vet{A}$, uma vez que
+		$$\sum_{\xi = 0}^{k} \vet{A}^\xi = \vet{S} \left[ \sum_{\xi = 0}^{k} \vet{\Lambda}^\xi \right]\vet{S}^{-1} = \vet{S} \left[ \begin{matrix}%%
+			\displaystyle \sum_{\xi = 0}^{k} \lambda_1^\xi & ~ & ~ \\
+			~ & \ddots & ~ \\
+			~ & ~ & \displaystyle \sum_{\xi = 0}^{k} \lambda_n^\xi%%
+		\end{matrix} \right]\vet{S}^{-1} = \vet{S} \left[ \begin{matrix}%%
+			\displaystyle \frac{1 - \lambda_1^{k + 1}}{1 - \lambda_1} & ~ & ~ \\[2.5ex]
+			~ & \ddots & ~ \\[2.5ex]
+			~ & ~ & \displaystyle \frac{1 - \lambda_n^{k + 1}}{1 - \lambda_n}%%
+		\end{matrix} \right]\vet{S}^{-1}$$
+	onde fica clara a condição de que $\lambda \neq 1$.
+
+	\quest*{Grau médio e densidade} %% 2
+
+	Para analisar o comportamento das duas propriedades (grau médio $\ol{g}$ e densidade $\rho$) vamos escrever cada uma em função da outra. Partimos das expressões
+		$$\ol{g} = \frac{2m}{n} \text{ e } \rho = \frac{2m}{n (n - 1)}$$
+	de onde definimos as funções
+		$$\ol{g}(\rho) = \rho (n - 1) \text{ e } \rho(\ol{g})= \frac{\ol{g}}{(n - 1)}$$
+	O grau médio é, portanto, uma dilatação da densidade por um fator $(n - 1)$ para $n \in \N$ qualquer. Possui comportamento monotônico crescente como função de $\rho$. Desta forma, para um grafo qualquer de $n$ vértices, independentemente de sua configuração de artestas, sabemos que o grau médio e a densidade estão relacionados de maneira linear. Mais do que isso, dizemos que $\ol{g} \propto \rho$. Isso garante que altas densidades levam a um alto grau médio da rede, e vice-versa. 
+
+	\quest*{clusterização}%% 3
+	
+	\subquest{}%%1
+	Calculando a clusterização local de cada vértice do grafo:
+	
+	\begin{fig}
+		\input{assign1-3-1.tikz}
+	\end{fig}
+
+	A clusterização média será, portanto,
+	$$\frac{1}{6} \sum_{i = \text{A}}^{\text{F}} c_i = \frac{1}{2} = 0.5$$
+
+	\subquest{}%%2
+	Contando as triplas:
+	
+	\begin{fig}
+		\input{assign1-3-2.tikz}
+	\end{fig}
+
+	Temos, então, 11 triplas e 2 triângulos ($\triangle ABD$ e $\triangle BCF$). Logo, a clusterização global é dada por
+	$$\frac{3 \times \text{nº de triângulos}}{\text{nº de triplas}} = \frac{6}{11} = 0.\ol{54} $$
+
+	\subquest{}%%3
+	A densidade da rede é dada por simplesmente $\rho = \frac{2m}{n (n - 1)}$, ou seja, $\rho = \frac{16}{30} = 0.5\ol{3}$. Observa-se que o valor da densidade se encontra entre o da clusterização média e o da clusterização global, estando mais próximo desta última.
+
+	\quest*{\textit{Closeness}}%%4
+
+	Lembrando que o \textit{closeness} de um vértice $v$ é dado pela expressão
+		$$c_v = \frac{1}{n - 1} \sum_{u \neq v \in V} d(u, v)$$
+	onde $d(u, v)$ é a distância entre $u$ e $v$ definimos as métricas globais:
+	\begin{itemize}
+		\item \textit{Average Pairwise Distance} (APD): 
+			$$\text{APD}(V, E) = \frac{1}{\binom{n}{2}} \sum_{u \in V} \sum_{v > u \in V} d(u, v)$$
+		\item \textit{Average Path Lenght} (APL:) 
+			$$\text{APL}(V, E) = \frac{1}{n (n - 1)} \sum_{u \in V} \sum_{v \in V} d(u, v)$$
+	\end{itemize}
+	É importante notar que a métrica APD só se aplica a grafos não-direcionados, uma vez que os pares $(u, v)$ do somatório sempre tem $v > u$. Aplicar sobre grafos direcionados geraria assimetria conforme a numeração dos vértices.
+
+	\subquest{}%%1
+	Reescrevendo APD:
+	\begin{align*}
+		\text{APD}(V, E) %%
+		&= \frac{1}{\binom{n}{2}} \sum_{u \in V} \sum_{v > u \in V} d(u, v)\\[1ex]
+		&= \frac{2}{n (n - 1)} \sum_{u \in V} \sum_{v > u \in V} d(u, v)\\[1ex]
+		&= \frac{1}{n (n - 1)} \sum_{u \in V} \left[ \sum_{v > u \in V} d(u, v) + \sum_{v > u \in V} d(u, v) \right]\\
+		&= \frac{1}{n (n - 1)} \sum_{u \in V} \left[ \sum_{v > u \in V} d(u, v) + \sum_{v < u \in V} d(u, v) + \sum_{v = u \in V} d(u, v)\right]\\
+		&= \frac{1}{n (n - 1)} \sum_{u \in V} \sum_{v \in V} d(u, v)\\
+		&= \text{APL}(V, E)
+	\end{align*}
+	Aqui assumimos que $d(u, v) = d(v, u) \;\forall u, v \in V$ e $d(u, u) = 0 \;\forall u \in V$. Esta última suposição apenas explicita que \textit{loops} não são levados em consideração, deixando assim a definição compatível com o termo $n (n - 1)$ que divide o total.\par
+
+	Vamo agora reescrever a métrica APD em função do \textit{closeness} dos vértices:
+	\begin{align*}
+		\text{APD}(V, E) %%
+		&= \frac{1}{n (n - 1)} \sum_{u \in V} \left[ \sum_{v > u \in V} d(u, v) + \sum_{v < u \in V} d(u, v) \right]\\
+		&= \frac{1}{n (n - 1)} \sum_{u \in V} \sum_{v \neq u \in V} d(u, v) \\
+		&= \frac{1}{n} \sum_{u \in V} c_u
+	\end{align*}
+	onde $c_u$ é o \textit{closeness} do vértice $u$. Vale notar que isso diz que APD e APL podem ser entendidos como o \textit{closeness} médio.
+
+	\subquest{}%% 2
+	Se o APL e o diâmetro de uma rede são iguais, então
+	\begin{align*}
+			\text{APL}(V, E) &= \text{D}(V, E) \\
+			\frac{1}{n (n - 1)} \sum_{u \in V} \sum_{v \in V} d(u, v) &= \max_{u, v \in V} d(u, v) \\
+			\frac{1}{n (n - 1)} \sum_{u, v \in V} \norm[1]{d(u, v)} &= \lim_{p \to \infty} \left[ \sum_{u, v \in V} \norm[1]{d(u, v)}^p \right]^{\frac{1}{p}} \\
+\therefore  \frac{1}{n (n - 1)} &= 
+	\end{align*}
+
+
+	
+
 \end{document}
