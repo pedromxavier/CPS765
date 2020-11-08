@@ -67,7 +67,7 @@
 	\subquest{}%%1
 	Calculando a clusterização local de cada vértice do grafo:
 	
-	\begin{fig}
+	\begin{fig}[Clusterização local]
 		\input{assign1-3-1.tikz}
 	\end{fig}
 
@@ -75,9 +75,9 @@
 	$$\frac{1}{6} \sum_{i = \text{A}}^{\text{F}} c_i = \frac{1}{2} = 0.5$$
 
 	\subquest{}%%2
-	Contando as triplas:
+	Contando as triplas e os triângulos:
 	
-	\begin{fig}
+	\begin{fig}[Triplas numeradas]
 		\input{assign1-3-2.tikz}
 	\end{fig}
 
@@ -127,11 +127,120 @@
 	\begin{align*}
 			\text{APL}(V, E) &= \text{D}(V, E) \\
 			\frac{1}{n (n - 1)} \sum_{u \in V} \sum_{v \in V} d(u, v) &= \max_{u, v \in V} d(u, v) \\
-			\frac{1}{n (n - 1)} \sum_{u, v \in V} \norm[1]{d(u, v)} &= \lim_{p \to \infty} \left[ \sum_{u, v \in V} \norm[1]{d(u, v)}^p \right]^{\frac{1}{p}} \\
-\therefore  \frac{1}{n (n - 1)} &= 
+			\frac{1}{n (n - 1)} \sum_{u, v \in V} \norm[0]{d(u, v)} &= \lim_{p \to \infty} \left[ \sum_{u, v \in V} \norm[0]{d(u, v)}^p \right]^{\frac{1}{p}} \\
+\therefore  \frac{1}{n (n - 1)} &=  
 	\end{align*}
 
+	\subquest{} %3
 
+	\subquest{} %4
+	Seja $L_{h, k}$ um grafo pirulito fruto da junção da clique $\mathcal{K}_h$ com um caminho simples $\mathcal{C}_{k}$ onde $n = k + h$ é o total de vértices.
 	
+	\begin{fig}[Um Grafo Pirulito]
+		\resizebox{.66\textwidth}{!}{
+			\input{assign1-4-1.tikz}
+		}
+	\end{fig}
+
+	Para calcular o valor da métrica APD para este grafo vamos utilizar a expressão que o relaciona com o \textit{closeness} de cada vértice.\par
+	
+	\quest{\textit{Betweeness}}%% 5
+	Seja $b_v(i, j)$ a contribuição do par $(i, j)$ para o \textit{betweeness} do vértice $v$. Temos as seguintes definições:
+	\begin{enumerate}
+		\item $\displaystyle \hat{b}_v(i, j) = \I{\sigma_v(i, j) > 0}$
+		\item $\displaystyle b_v(i, j) = \frac{\sigma_v(i, j)}{\sigma(i, j)}$
+		\item $\displaystyle \check{b}_v(i, j) = \I{\sigma_v(i, j) = \sigma(i, j)}$
+	\end{enumerate}
+	Podemos pensar as definições $1$ e $3$ como sendo as versões otimista e pessimista da definição $2$, respectivamente.
+
+	\subquest{}%%1
+	Em um grafo completo com $\norm[0]{V} = n$ vértices, sempre existe uma aresta entre um par $(i, j)$. Portanto, todo caminho mínimo entre $i$ e $j$ é único e possui comprimento 1. Desta forma, $b_v(i,j) = 0$ independentemente da métrica utilizada. O \textit{betweeness} de cada vértice é, portanto, igual a zero.
+	
+	\subquest{}%%2
+	Em um grafo bipartido completo, com conjuntos disjuntos de vértices $V_1$ e $V_2$, onde $V = V_1 \cup V_2$, temos dois casos a serem analisados separadamente. Para um dado par de vértices $(i, j)$ temos que, se $v \in V_\xi, \xi = 1, 2$:
+	$$b_v(i, j) = \left\{ \begin{array}{@{}cl@{}}
+		0& \text{se } i \in V_1 \text{ e } j \in V_2\\
+		~& \text{se } i, j \in V_1\\
+		b_v(j, i)& \text{caso contrário}
+	\end{array} \right.$$
+
+	\subquest{}%%3
+	
+	\quest{\textit{PageRank}}%% 6
+
+	\subquest{}%%
+	A centralidade de \textit{PageRank} é a solução para o sistema de equações abaixo:
+		$$\vet{x}_i = \alpha \sum_{j = 1}^n \vet{A}_{j, i} \frac{\vet{x}_j}{\vet{d}^s_j} + \frac{1 - \alpha}{n}$$
+	onde $\vet{d}^s_j$ é o grau de saída do vértice $j$. Este termo pode ser absorvido pela matriz de adjacências, dividindo cada $j$-ésima linha da matriz por $\vet{d}^s_j$, obtendo assim a matriz $\vet{D}$. Além disso, o somatório está representando um produto interno, entre a $i$-ésima linha de $\vet{D}\T$ e o vetor $\vet{x}$, que mede a centralidade de cada vértice. Tomando $\beta = \frac{1 - \alpha}{n}$, podemos reescrever a equação como:
+		$$\vet{x} = \left[\alpha \vet{D}\T + \beta \mathbbm{1} \right] \vet{x}$$
+	onde $\mathbbm{1} \in \R^{n \times n}$ tem entradas $\mathbbm{1}_{i,j} = 1$. Esta equação vale quando levamos em consideração que $\norm[1]{\vet{x}} = 1$ e que $0 \le \vet{x}_i \le 1$. Seja $\vet{M} = \alpha \vet{D}\T + \beta \mathbbm{1}$, temos que a solução do sistema $\vet{x}$ é o autovetor principal de $\vet{M}$ com autovalor correspondente $\lambda = 1$. Como a primeira equação é equivalente a esta última, e cada iteração do método da potência é dada por $\vet{x}^{(k + 1)} = \vet{M} \vet{x}^{(k)}$ a menos de uma normalização, podemos calcular o \textit{PageRank} iterativamente, pela relação
+	$$\vet{x}^{(k + 1)}_i = \alpha \sum_{j = 1}^n \vet{A}_{j, i} \frac{\vet{x}^{(k)}_j}{\vet{d}^s_j} + \frac{1 - \alpha}{n}$$
+	Para tratar todos os nós com igual importância inicial, atribui-se $\vet{x}_i^{(0)} = \frac{1}{n}$.
+
+	\subquest{}%%
+	Vamos agora calcular o \textit{PageRank} da rede abaixo:
+	
+	\begin{fig}[Rede abaixo]
+		\input{assign1-6-1.tikz}
+	\end{fig}
+
+	Nas tabelas a seguir, temos o valor da centralidade de cada vértice após 5, 10, e 30 iterações, para os valores de $\alpha$ 0.1 e 0.9, respectivamente.
+
+	\begin{multicols}{2}
+		\begin{fig}[$\alpha = 0.1$]
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				$v$ & 5 & 10 & 30\\
+				\hline
+				1 & .189 & .189 & .189\\
+				\hline
+				2 & .191 & .191 & .191\\
+				\hline
+				3 & .189 & .189 & .189\\
+				\hline
+				4 & .228 & .228 & .228\\
+				\hline
+				5 & .200 & .200 & .200\\
+				\hline
+			\end{tabular}
+		\end{fig}
+	
+		\begin{fig}[$\alpha = 0.9$]
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				$v$ & 5 & 10 & 30\\
+				\hline
+				1 & .103 & .104 & .104\\
+				\hline
+				2 & .188 & .186 & .186\\
+				\hline
+				3 & .064 & .066 & .066\\
+				\hline
+				4 & .371 & .371 & .370\\
+				\hline
+				5 & .271 & .271 & .271\\
+				\hline
+			\end{tabular}
+		\end{fig}
+	\end{multicols}
+
+	Esta análise permite ver que o algoritmo converge muito rapidamente. Este fato se mostra ainda mais contundente quando se observa que o mais relevante para o resultado é a ordenação hierárquica e não os valores propriamente ditos.\par
+
+	Mesmo assim, acredito que para entender melhor o comportamento do algoritmo ao longo do processo é interessante apresentar os gráficos com a evolução temporal para cada valor de $\alpha$, na figura a seguir.
+
+	\begin{fig}[Evolução do \textit{PageRank}]
+		\includegraphics[width=\textwidth]{"../src/plot/pagerank.pdf"}
+	\end{fig}
+
+	\quest{Similaridade entre vértices}%% 7
+
+	\begin{fig}[Grafo de \textit{Barbell} $\mathcal{B}_{h, k}$]
+		\input{assign1-7-1.tikz}
+	\end{fig}
+
+	\subquest{Similaridade de Jaccard e do Cosseno}%%1
+
+	\subquest{}
+
 
 \end{document}

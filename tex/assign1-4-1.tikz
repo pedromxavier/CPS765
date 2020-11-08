@@ -1,0 +1,53 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=graphnode] (1) at (-5, 2) {};
+		\node [style=graphnode] (2) at (-6, 0) {};
+		\node [style=graphnode] (3) at (-5, -2) {};
+		\node [style=graphnode] (4) at (-3, -3) {};
+		\node [style=graphnode] (5) at (-1, -2) {};
+		\node [style=graphnode] (6) at (-1, 2) {};
+		\node [style=graphnode] (7) at (0, 0) {};
+		\node [style=graphnode] (8) at (-3, 3) {};
+		\node [t] (K) at (-3, -3.75) {$\mathcal{K}_h$};
+
+		\node [style=new style 0] (9) at (2, 0) {};
+		\node [style=new style 0] (10) at (4, 0) {};
+		\node [style=new style 0] (11) at (8, 0) {};
+		\node [style=new style 0] (12) at (6, 0) {};
+		\node [t] (C) at (5, -0.75) {$\mathcal{C}_k$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=edge] (1) to (2);
+		\draw [style=edge] (2) to (3);
+		\draw [style=edge] (3) to (4);
+		\draw [style=edge] (4) to (5);
+		\draw [style=edge] (5) to (7);
+		\draw [style=edge] (6) to (7);
+		\draw [style=edge] (7) to (4);
+		\draw [style=edge] (7) to (3);
+		\draw [style=edge] (7) to (2);
+		\draw [style=edge] (7) to (1);
+		\draw [style=edge] (3) to (1);
+		\draw [style=edge] (4) to (2);
+		\draw [style=edge] (5) to (3);
+		\draw [style=edge] (1) to (4);
+		\draw [style=edge] (1) to (5);
+		\draw [style=edge] (4) to (6);
+		\draw [style=edge] (5) to (6);
+		\draw [style=edge] (6) to (1);
+		\draw [style=edge] (6) to (2);
+		\draw [style=edge] (3) to (6);
+		\draw [style=edge] (2) to (5);
+		\draw [style=edge-dashed] (1) to (8);
+		\draw [style=edge-dashed] (8) to (6);
+		\draw [style=edge-dashed] (8) to (2);
+		\draw [style=edge-dashed] (8) to (3);
+		\draw [style=edge-dashed] (8) to (4);
+		\draw [style=edge-dashed] (8) to (5);
+		\draw [style=edge-dashed] (8) to (7);
+		\draw [style=edge] (7) to (9);
+		\draw [style=edge] (9) to (10);
+		\draw [style=edge] (12) to (11);
+		\draw [style=edge-dashed] (10) to (12);
+	\end{pgfonlayer}
+\end{tikzpicture}

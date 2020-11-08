@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=plain] (1) at (-3.5, 0.25) {3};
+		\node [style=plain] (2) at (-1, -1.25) {4};
+		\node [style=plain] (3) at (1.25, 2.75) {2};
+		\node [style=plain] (4) at (3, -0.5) {5};
+		\node [style=plain] (5) at (-2.25, 2.5) {1};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=oriented] (1) to (2);
+		\draw [style=oriented] (5) to (1);
+		\draw [style=oriented] (5) to (2);
+		\draw [style=oriented] (3) to (5);
+		\draw [style=oriented] (2) to (3);
+		\draw [style=oriented, bend left=15] (2) to (4);
+		\draw [style=oriented, bend left=15] (4) to (2);
+		\draw [style=oriented] (3) to (4);
+	\end{pgfonlayer}
+\end{tikzpicture}
