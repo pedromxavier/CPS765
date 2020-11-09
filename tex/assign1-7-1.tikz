@@ -4,7 +4,7 @@
 	\begin{pgfonlayer}{nodelayer}
 		\node [style=plains] (0) at (-2.5 * \tks, 1 * \tks) {a};
 		\node [style=plains] (1) at (-1.5 * \tks, 1 * \tks) {c};
-		\node [style=plains] (2) at (-2.5 * \tks, 0 * \tks) {*};
+		\node [style=plains] (2) at (-2.5 * \tks, 0 * \tks) {ξ};
 		\node [style=plains] (3) at (-1.5 * \tks, 0 * \tks) {b};
 		\node [style=plains] (4) at (-0.5 * \tks, 1 * \tks) {d};
 		\node [style=plains] (6) at (0.5 * \tks, 1 * \tks) {e};

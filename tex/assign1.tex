@@ -234,13 +234,41 @@
 
 	\quest{Similaridade entre vértices}%% 7
 
-	\begin{fig}[Grafo de \textit{Barbell} $\mathcal{B}_{h, k}$]
+	\begin{fig}[Grafo de \textit{Barbell} $\mathcal{B}_{4, 2}$]
 		\input{assign1-7-1.tikz}
 	\end{fig}
 
-	\subquest{Similaridade de Jaccard e do Cosseno}%%1
+	\subquest{}%%1
+	Recapitulando as definições da similaridade de \textit{Jaccard} $\mathcal{J}(i, j)$ e da similaridade do Cosseno $\mathcal{C}(i, j)$ dizemos que
+		$$\mathcal{J}(i, j) = \frac{\norm[0]{\adj i \cap \adj j}}{\norm[0]{\adj i \cup \adj j}} ~\text{ e }~ \mathcal{C}(i, j) = \frac{\inner{\vet{A}_i}{\vet{A}_j}}{\norm{\vet{A}_i} \cdot \norm{\vet{A}_j}} = \frac{\norm[0]{\adj i \cap \adj j}}{\sqrt{\norm[0]{\adj i} \cdot \norm[0]{\adj j}}}$$
+	onde $\adj \xi$ denota o conjunto dos vértices na vizinhança de $\xi$ e $\vet{A}_\xi$ é a linha correspondente na matriz de adjacências.\par
 
-	\subquest{}
+	Organizando os resultados em uma tabela:
 
+	\begin{fig}
+		\begin{tabular}{|c|c|c|c|c|r|r|}
+		\hline
+		$i, j$ & $\adj i$ & $\adj$ j & $\adj i \cap \adj j$ & $\adj i \cup \adj j$ & $\mathcal{J}(i, j)$ & $\mathcal{C}(i, j)$\\
+		\hline
+		$a, b$ & \set{b, c, \xi} & \set{a, c, \xi} & \set{c, \xi} & \set{a, b, c, \xi} & .50 & .66 \\
+		\hline
+		$b, c$ & \set{a, c, \xi} & \set{a, b, d, \xi} & \set{a, \xi} & \set{a, b, c, d, \xi} & .40 & .58\\
+		\hline
+		$c, d$ & \set{a, b, d, \xi} & \set{c, e} & \set{} & \set{a, b, c, d, e, \xi} & 0 & 0 \\
+		\hline
+		$d, e$ & \set{c, e} & \set{d, f} & \set{} & \set{c, d, e, f} & 0 & 0 \\
+		\hline
+		\end{tabular}
+	\end{fig}
+
+	\subquest{}%%2
+	Não, muito pelo contrário. Como ambas possuem a interseção das vizinhanças no numerador, vértices cujas conexões são idênticas a menos de isomorfismo não serão contemplados por estas duas métricas. Do ponto de vista da \textit{identidade estrutural}, poderíamos afirmar que os vértices $d$ e $e$ são estruturalmente idênticos. Se alguém removesse as etiquetas da Figura \ref{fig:7.1} e chacoalhasse o grafo um pouco, já seria impossível afirmar com certeza quais vértices estavam marcados por $d$ e $e$. No entanto, em ambas as métricas este par de vértices foi tratato como plenamente dissemelhante.
+
+	\subquest{}%%3
+	O grafo de \textit{Barbell} foi colorido na figura abaixo de modo que dois vértices possam ter suas identidades trocadas e ainda pertencer a um automorfismo $\sigma$ caso tenham sido coloridos com a mesma cor.
+
+	\begin{fig}[Um mapa para o Automorfismo]
+		\input{assign1-7-2.tikz}
+	\end{fig}
 
 \end{document}
