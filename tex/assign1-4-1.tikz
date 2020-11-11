@@ -1,19 +1,19 @@
 \begin{tikzpicture}
 	\begin{pgfonlayer}{nodelayer}
-		\node [style=graphnode] (1) at (-5, 2) {};
-		\node [style=graphnode] (2) at (-6, 0) {};
-		\node [style=graphnode] (3) at (-5, -2) {};
-		\node [style=graphnode] (4) at (-3, -3) {};
-		\node [style=graphnode] (5) at (-1, -2) {};
-		\node [style=graphnode] (6) at (-1, 2) {};
-		\node [style=graphnode] (7) at (0, 0) {};
-		\node [style=graphnode] (8) at (-3, 3) {};
+		\node [style=graphnode, fill=red!40] (1) at (-5, 2) {};
+		\node [style=graphnode, fill=red!40] (2) at (-6, 0) {};
+		\node [style=graphnode, fill=red!40] (3) at (-5, -2) {};
+		\node [style=graphnode, fill=red!40] (4) at (-3, -3) {};
+		\node [style=graphnode, fill=red!40] (5) at (-1, -2) {};
+		\node [style=graphnode, fill=red!40] (6) at (-1, 2) {};
+		\node [style=graphnode, fill=blue!40] (7) at (0, 0) {};
+		\node [style=graphnode, fill=red!40] (8) at (-3, 3) {};
 		\node [t] (K) at (-3, -3.75) {$\mathcal{K}_h$};
 
-		\node [style=new style 0] (9) at (2, 0) {};
-		\node [style=new style 0] (10) at (4, 0) {};
-		\node [style=new style 0] (11) at (8, 0) {};
-		\node [style=new style 0] (12) at (6, 0) {};
+		\node [style=new style 0, fill=yellow!40] (9) at (2, 0) {};
+		\node [style=new style 0, fill=yellow!40] (10) at (4, 0) {};
+		\node [style=new style 0, fill=yellow!40] (11) at (8, 0) {};
+		\node [style=new style 0, fill=yellow!40] (12) at (6, 0) {};
 		\node [t] (C) at (5, -0.75) {$\mathcal{C}_k$};
 	\end{pgfonlayer}
 	\begin{pgfonlayer}{edgelayer}

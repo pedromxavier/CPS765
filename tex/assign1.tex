@@ -6,7 +6,7 @@
 \register{116023847}
 
 \begin{document}
-	\maketitle*%%
+	\maketitle*[pesc.png]%%
 
 	\quest*{Matriz de Adjacência}
 	Podemos supor, neste caso, que as matrizes em questão vivem em um espaço vetorial construído sobre o semianel $(\mathcal{B}, \vee, \wedge)$ em vez de $(\R, +, \pdot)$, onde $\mathcal{B} = \{0, 1\}$. Assim, as entradas das matrizes serão sempre $0$ ou $1$ e as operações usuais de soma e multiplicação são substituídas pela disjunção e pela conjunção lógica, respectivamente.
@@ -32,11 +32,11 @@
 	\subsubquest%%d
 	Seguindo o conselho de multiplicar diferentemente, apresento duas abordagens para reduzir a complexidade do cálculo de $\vet{B}^{(k)}$ e $\vet{C}^{(k)}$. A primeira, se aplica a um grafo qualquer e se baseia na seguinte relação:
 		$$\vet{A}^k = \left\{\begin{array}{@{}cl@{}}
-			\vet{I} &\text{para } k = 0\\
-			\left(\vet{A}^{\frac{k}{2}}\right)^2 &\text{para } k \text{ par}\\
+			\vet{I} &\text{para } k = 0\\[1.5ex]
+			\left(\vet{A}^{\frac{k}{2}}\right)^2 &\text{para } k \text{ par}\\[1.5ex]
 			\left(\vet{A}^{\frac{k - 1}{2}}\right)^2 \ast \vet{A} &\text{para } k \text{ ímpar}
 		\end{array}\right.$$
-	para $k \ge 0$. Em geral, esta relação vale para qualquer operação $\ast$ associativa e, portanto, utilizaremos para o cálculo das potências de matrizes. Isso nos traz complexidade $O(\log k)$ nesta tarefa. Com este aprimoramento, somos capazes de calcular $\vet{B}^{(k)}$ em tempo $O(n^3 \log k)$ enquanto $\vet{C}^{(k)}$ sai por $O(n^3 \log k!) = O(n^3 k \log k)$. Apesar do ganho no cálculo de $\vet{B}_{(k)}$, simplesmente aplicar este método requer calcular cada $\xi$-ésima potência de $\vet{A}$. É melhor, portanto, multiplicar por $\vet{A}$ e somar ao resultado iterativamente, com custo $O(n^3 k + n^2 k) = O(n^3 k)$.\par
+	para $k \ge 0$. Em geral, esta relação vale para qualquer operação $\ast$ associativa e, portanto, utilizaremos para o cálculo das potências de matrizes. Isso nos traz complexidade $O(\log k)$ nesta tarefa. Com este aprimoramento, somos capazes de calcular $\vet{B}^{(k)}$ em tempo $O(n^3 \log k)$ enquanto $\vet{C}^{(k)}$ sai por $O(n^3 \log k!) = O(n^3 k \log k)$. Apesar do ganho no cálculo de $\vet{B}^{(k)}$, simplesmente aplicar este método requer calcular cada $\xi$-ésima potência de $\vet{A}$. É melhor, portanto, multiplicar por $\vet{A}$ e somar ao resultado iterativamente, com custo $O(n^3 k + n^2 k) = O(n^3 k)$.\par
 
 	Ainda podemos fazer melhor em alguns casos, dadas algumas condições. Vamos retornar ao espaço euclidiano usual $\R^{n \times n}$, pagando um custo $O(n^2)$ ao final do cálculo para definir cada entrada de $\vet{B}^{(k)}$ e $\vet{C}^{(k)}$ como 0 ou 1 verificando se cada elemento da matriz é ou não nulo, respectivamente. Se $\det (\vet{I} - \vet{A}) = (-1)^n \det (\vet{A} - \vet{I}) \neq 0$, isto é, para cada autovalor $\lambda$ de $\vet{A}$ temos que $\lambda \neq 1$, podemos dizer que
 		$$\sum_{\xi = 0}^{k} \vet{A}^\xi = (\vet{I} - \vet{A})^{-1} (\vet{I} - \vet{A}^{k + 1})$$
@@ -61,7 +61,7 @@
 	de onde definimos as funções
 		$$\ol{g}(\rho) = \rho (n - 1) \text{ e } \rho(\ol{g})= \frac{\ol{g}}{(n - 1)}$$
 	O grau médio é, portanto, uma dilatação da densidade por um fator $(n - 1)$ para $n \in \N$ qualquer. Possui comportamento monotônico crescente como função de $\rho$. Desta forma, para um grafo qualquer de $n$ vértices, independentemente de sua configuração de artestas, sabemos que o grau médio e a densidade estão relacionados de maneira linear. Mais do que isso, dizemos que $\ol{g} \propto \rho$. Isso garante que altas densidades levam a um alto grau médio da rede, e vice-versa. 
-
+		
 	\quest*{clusterização}%% 3
 	
 	\subquest{}%%1
@@ -124,17 +124,26 @@
 
 	\subquest{}%% 2
 	Se o APL e o diâmetro de uma rede são iguais, então
-	\begin{align*}
-			\text{APL}(V, E) &= \text{D}(V, E) \\
-			\frac{1}{n (n - 1)} \sum_{u \in V} \sum_{v \in V} d(u, v) &= \max_{u, v \in V} d(u, v) \\
-			\frac{1}{n (n - 1)} \sum_{u, v \in V} \norm[0]{d(u, v)} &= \lim_{p \to \infty} \left[ \sum_{u, v \in V} \norm[0]{d(u, v)}^p \right]^{\frac{1}{p}} \\
-\therefore  \frac{1}{n (n - 1)} &=  
-	\end{align*}
+		$$%%
+		\sum_{u \in V} \sum_{v \in V} d(u, v) = n (n - 1) \max_{u, v \in V} d(u, v) \iff d(i, j) = \max_{u, v \in V} d(u, v) ~~\forall i, j \in V, i \neq j
+		$$%%
+	para $n \le 2$, a relação vale. Escolhendo $n = 3$, portanto, encontramos uma configuração onde a equação não é satisfeita
+
+	\begin{fig}[O menor contra-exemplo]
+		\input{assign1-4-2.tikz}
+	\end{fig}
+
+	já que temos distâncias entre pares de valores distintos, sendo este o menor grafo conexo não-completo de $n$ vértices. Vale lembrar que em todo momento consideramos $d(i, j) = d(j, i)$ assim como $d(i, i) = 0$.
 
 	\subquest{} %3
+	Sabemos que o valor da razão entre o diâmetro e a métrica APD de um grafo qualquer de $n$ vértices é limitada por
+		$$1 \le \frac{\text{D}(V, E)}{\text{APL}(V, E)} \le \binom{n}{2}$$
+	Isto segue diretamente da equivalência das normas $\norm[\infty]{\vet{x}} \le \norm[1]{\vet{x}} \le \xi \norm[\infty]{\vet{x}}$ com $\vet{x} \in \R^\xi$. De fato, para grafos completos e linhas a razão é limitada por constantes.\par
+
+	No entanto, isto não vale para qualquer tipo de grafo. Seja $\mathcal{L}_{p, q}$ o grafo de \textit{Barbell} cujas duas cliques $\mathcal{K}_p$ e são ligadas por uma linha de $q$ vértices. O diâmtro desta rede é $q + 2$, enquanto o valor do APD é $?$
 
 	\subquest{} %4
-	Seja $L_{h, k}$ um grafo pirulito fruto da junção da clique $\mathcal{K}_h$ com um caminho simples $\mathcal{C}_{k}$ onde $n = k + h$ é o total de vértices.
+	Seja $\mathcal{L}_{h, k}$ um grafo pirulito fruto da junção da clique $\mathcal{K}_h$ com um caminho simples $\mathcal{C}_{k}$ onde $n = k + h$ é o total de vértices.
 	
 	\begin{fig}[Um Grafo Pirulito]
 		\resizebox{.66\textwidth}{!}{
@@ -142,8 +151,23 @@
 		}
 	\end{fig}
 
-	Para calcular o valor da métrica APD para este grafo vamos utilizar a expressão que o relaciona com o \textit{closeness} de cada vértice.\par
-	
+	Lembrando que
+		$$\text{APD}(V, E) = \frac{1}{\binom{n}{2}} \sum_{u \in V} \sum_{v > u \in V} d(u, v) = \frac{1}{n - 1} \sum_{u \in V} c_u$$
+	onde $c_u$ é o \textit{closeness} do vértice $u$.\par
+
+	Vamos primeiro dividir o grafo em duas componentes conexas. Seja $\hat{\mathcal{K}}$ o conjunto (em vermelho) dos vértices da clique, exceto o vértice da ponte (em azul). Seja também $\hat{\mathcal{C}}$ a junção do grafo linha (em amarelo) com o vértice na ponte. Vamos numerar os vértices em $\hat{\mathcal{C}}$ de 1 até $k + 1$, da esquerda para a direita.\par
+
+	Agora, vamos calcular o \textit{closeness} de um vértice $\kappa$ qualquer em $\hat{\mathcal{K}}$.
+	\begin{align*}
+		c_\kappa &= \frac{1}{h - 2} \sum_{i = 1}^{h - 2} 1 + \frac{1}{k + 1} \sum_{i = 1}^{k + 1} i\\
+		&= 1 + \frac{(k + 1) (k + 2)}{2 (k + 1)} = \frac{k + 4}{2}
+	\end{align*}
+
+	Em seguida, o \textit{closeness} do $\xi$-ésimo vértice de $\hat{\mathcal{C}}$, da maneira que os numeramos.
+	\begin{align*}
+		c_\xi
+	\end{align*}
+
 	\quest{\textit{Betweeness}}%% 5
 	Seja $b_v(i, j)$ a contribuição do par $(i, j)$ para o \textit{betweeness} do vértice $v$. Temos as seguintes definições:
 	\begin{enumerate}
@@ -157,14 +181,63 @@
 	Em um grafo completo com $\norm[0]{V} = n$ vértices, sempre existe uma aresta entre um par $(i, j)$. Portanto, todo caminho mínimo entre $i$ e $j$ é único e possui comprimento 1. Desta forma, $b_v(i,j) = 0$ independentemente da métrica utilizada. O \textit{betweeness} de cada vértice é, portanto, igual a zero.
 	
 	\subquest{}%%2
-	Em um grafo bipartido completo, com conjuntos disjuntos de vértices $V_1$ e $V_2$, onde $V = V_1 \cup V_2$, temos dois casos a serem analisados separadamente. Para um dado par de vértices $(i, j)$ temos que, se $v \in V_\xi, \xi = 1, 2$:
-	$$b_v(i, j) = \left\{ \begin{array}{@{}cl@{}}
-		0& \text{se } i \in V_1 \text{ e } j \in V_2\\
-		~& \text{se } i, j \in V_1\\
-		b_v(j, i)& \text{caso contrário}
-	\end{array} \right.$$
+	Em um grafo bipartido completo, com conjuntos disjuntos de vértices $V_1$ e $V_2$, onde $V = V_1 \cup V_2$, temos dois casos a serem analisados separadamente. Para um dado par de vértices $(i, j)$ temos que, se $v \in V_\xi$ e $\ol{V}_{\xi} = V - V_\xi$ com $\xi = 1, 2$ então
+	$$b_{v \in V_\xi}(i, j) = \left\{\begin{array}{@{}cl@{}}%%
+		\frac{1}{\norm[0]{V_\xi}} & \text{se } i, j \in \ol{V}_\xi\\[1.5ex]
+		0                         & \text{caso contrário}
+	\end{array}\right.$$
+	uma vez que 
+
+	O \textit{betweeness} de um vértice $v$ é, portanto, segundo cada métrica normalizada,
+	\begin{align*}%%
+		\avg{\mathbbm{b}(v \in V_\xi)} &= \frac{1}{\binom{n}{2}} \sum_{i, j \in V} b_{v \in V_\xi}(i, j)\\
+		&= \frac{1}{\binom{n}{2}} \subbra{%%
+			\sum_{i, j \in V_\xi} b_{v \in V_\xi}(i, j) + %%
+			\sum_{\substack{i \in V_\xi \\ j \in \ol{V}_\xi}} b_{v \in V_\xi}(i, j) + %%
+			\sum_{\substack{i \in \ol{V}_\xi \\ j \in V_\xi}} b_{v \in V_\xi}(i, j) + %%
+			\sum_{i, j \in \ol{V}_\xi} b_{v \in V_\xi}(i, j)}\\%%
+		&= \frac{1}{\binom{n}{2}} \sum_{i, j \in \ol{V}_\xi} \frac{1}{\norm[0]{V_\xi}} = \frac{\ol{n}_\xi (\ol{n}_\xi - 1)}{n_\xi\, n (n - 1)}\\[3ex]%%
+\therefore%%
+		\avg{\hat{\mathbbm{b}}(v \in V_\xi)} &= \frac{1}{\binom{n}{2}} \sum_{i, j \in V} \hat{b}_{v \in V_\xi}(i, j) = \frac{1}{\binom{n}{2}} \sum_{i, j \in \ol{V}_\xi} 1 = \frac{\ol{n}_\xi (\ol{n}_\xi - 1)}{n (n - 1)}\\[3ex]%%
+\therefore%%
+		\avg{\check{\mathbbm{b}}(v \in V_\xi)} &= \frac{1}{\binom{n}{2}} \sum_{i, j \in V} \check{b}_{v \in V_\xi}(i, j) = \frac{1}{\binom{n}{2}} \sum_{i, j \in \ol{V}_\xi} 0 = 0
+	\end{align*}
+	onde $n_\xi = \norm[0]{V_\xi}$ e $\ol{n}_\xi = \norm[0]{\ol{V}_\xi}$.
 
 	\subquest{}%%3
+	Para o grafo tripartido completo com $V = V_1 \cup V_2 \cup V_3$ seguiremos uma linha de pensamento semelhante ao caso anterior, do grafo bipartido. No entanto, vamos tomar uma análise um tanto mais ambiciosa. Seja $G(V, E)$ um grafo $k$-partido completo, ou seja, $V = V_1 \cup V_2 \cup \dots \cup V_k$. A contribuição $b_v(i, j)$ de um par $(i, j) \in V$ para o \textit{betweeness} do vértice $v \in V$ só existe quando $i, j \in V_\xi$ e $v \notin V_\xi$ para algum $1 \le \xi \le k$, onde $\bigcup_{\xi = 1}^{k} V_\xi = V$ e $V_\xi \cap V_\zeta = \set{}$ se $\xi \neq \zeta$. Uma vez atendida esta condição, temos que um dos caminhos mínimos entre $i$ e $j$ passará por $v$, portanto $\sigma_v(i, j) = 1$. Caso contrário, $\sigma_v(i, j) = 0$. De qualquer forma, temos $\norm[0]{V_\zeta}$ caminhos mínimos entre $i, j \in V_\xi$ para cada $V_\zeta, \zeta \neq \xi$. Portanto, $\sigma(i, j) = \sum_{\zeta \neq \xi} \norm[0]{V_\zeta}$ quando $i, j \in V_\xi$. Seja $\ol{V}_\xi = V - V_\xi$, $\xi = 1, 2, \dots, k$. Logo, para um vértice $v$ em algum $V_\zeta \subseteq \ol{V}_\xi$%%
+	$$%%
+		b_{v \in \ol{V}_\xi}(i, j) = \left\{\begin{array}{@{}cl@{}}
+			\frac{1}{\norm[0]{\ol{V}_\xi}} & \text{se } i,j \in V_\xi\\[1ex]
+			0 & \text{caso contrário}
+		\end{array}\right.
+	$$%%
+	Portanto, as métricas normalizadas para um vértice $v \in V_\zeta$ em um grafo completo $k$-partido são expressas por%%
+	\begin{align*}%%
+		\avg{\mathbbm{b}(v \in V_\zeta)} &= \frac{1}{\binom{n}{2}} \sum_{i, j \in V} b_{v \in \ol{V}_\xi}(i, j)\\%%
+		&= \frac{1}{\binom{n}{2}} \sum_{\substack{\xi = 1 \\ \xi \neq \zeta}}^{k} \sum_{i, j \in V_\xi} b_{v \in \ol{V}_\xi}(i, j)\\%%
+		&= \frac{1}{\binom{n}{2}} \sum_{\substack{\xi = 1 \\ \xi \neq \zeta}}^{k} \sum_{i, j \in V_\xi} \frac{1}{\norm[0]{\ol{V}_\xi}}\\%%
+		&= \frac{1}{\binom{n}{2}} \sum_{\substack{\xi = 1 \\ \xi \neq \zeta}}^{k} \sum_{i, j \in V_\xi} \frac{1}{n - n_\xi}\\%%
+		&= \frac{1}{\binom{n}{2}} \sum_{\substack{\xi = 1 \\ \xi \neq \zeta}}^{k} \frac{ 1 }{ n - n_\xi } \cdot \frac{ n_\xi (n_\xi - 1) }{ 2 }\\%%
+		&= \sum_{\substack{\xi = 1 \\ \xi \neq \zeta}}^{k} \frac{ 1 }{ n - n_\xi } \cdot \frac{ n_\xi (n_\xi - 1) }{ n (n - 1) }%%
+	\end{align*}%%
+	o que, de fato, é compatível com o caso em que $k = 2$ (grafo bipartido completo) trocando-se $V_\xi$ por $\ol{V}_\xi$ (e, consequentemente, $n_\xi$ por $\ol{n}_\xi$). Vale lembrar que $\ol{n}_\xi = n - n_\xi$.\par
+
+	Por fim, aplicando a fórmula derivada acima para $k = 3$ (grafo tripartido completo) obtemos%%
+	\begin{align*}%%
+		\avg{\mathbbm{b}(v \in V_\zeta)} &= \frac{1}{\binom{n}{2}} \sum_{i, j \in V} b_{v \in \ol{V}_\xi}(i, j)\\%%
+		&= \sum_{\substack{\xi = 1 \\ \xi \neq \zeta}}^{3} \frac{ 1 }{ n - n_\xi } \cdot \frac{ n_\xi (n_\xi - 1) }{ n (n - 1) }\\%%
+		&= \frac{ 1 }{ n (n - 1) } \cdot \left[%%
+			\frac{ n_\phi (n_\phi - 1) }{ n - n_\phi } +
+			\frac{ n_\psi (n_\psi - 1) }{ n - n_\psi }
+		\right]\\[3ex]%%
+\therefore%%
+		\avg{\hat{\mathbbm{b}}(v \in V_\zeta)} &= \frac{1}{\binom{n}{2}} \sum_{i, j \in V} \hat{b}_{v \in V_\zeta}(i, j)\\ &= \frac{ { n_\phi (n_\phi - 1) } +
+		{ n_\psi (n_\psi - 1) } }{ n (n - 1) }\\[3ex]%%
+\therefore%%
+		\avg{\check{\mathbbm{b}}(v \in V_\zeta)} &= \frac{1}{\binom{n}{2}} \sum_{i, j \in V} \check{b}_{v \in V_\zeta}(i, j) = 0
+	\end{align*}%%
+	com $1 \le \zeta \neq \phi \neq \psi \le 3$.
 	
 	\quest{\textit{PageRank}}%% 6
 
